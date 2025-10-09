@@ -2,7 +2,7 @@ import {modificarPremiumService} from '../services/usuario.services.js';
 
 export const modificarPremiumController = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = req.user.id;;
     const usuarioModificado = await modificarPremiumService(id);
     return res.status(200).json(usuarioModificado);
   } catch (error) {
