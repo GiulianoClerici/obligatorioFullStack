@@ -1,5 +1,5 @@
 import express from 'express';
-import { crearReviewController,tiposController, eliminarReviewController, editarReviewController, reviewsPorTipoController,todasReviewsController} from '../controllers/review.controller.js';
+import { todasReviewsUsuarioController, crearReviewController,tiposController, eliminarReviewController, editarReviewController, reviewsPorTipoController,todasReviewsController, articulosTipoContoller} from '../controllers/review.controller.js';
 import { validateBodyMiddleware } from '../middlewares/validateBody.middleware.js';
 import { reviewSchema } from '../validators/review.validator.js';
 
@@ -10,6 +10,8 @@ router.delete("/eliminarReview/:id", eliminarReviewController)
 router.patch("/editarReview/:id", editarReviewController)
 router.get("/tipo/:tipoArticulo", reviewsPorTipoController)
 router.get("/", todasReviewsController)
+router.get("/misReviews", todasReviewsUsuarioController)
 router.get("/tipos", tiposController)
+router.get("/articulos", articulosTipoContoller)
 
 export default router;

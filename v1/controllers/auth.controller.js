@@ -1,4 +1,4 @@
-import { loginService, registerService } from '../services/auth.services.js';
+import { loginService, registerService, validarTokenService } from '../services/auth.services.js';
 
 export const loginController = async (req, res) => {
     try {
@@ -16,4 +16,25 @@ export const registerController = async (req, res) => {
     } catch (error) {
         return res.status(error.status || 500).json({ message: error.message || 'Error en el registro' });
     }
+};
+
+export const validarTokenController = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({ message: "Token no proporcionado" });
+    }
+
+    const decoded = await validarTokenService(token);
+
+    return res.status(200).json({
+      message: "Token válido"
+    });
+
+  } catch (error) {
+    return res.status(error.status || 500).json({
+      message: error.message || "Error al validar token",
+    });
+  }
 };

@@ -15,5 +15,7 @@ export const registerSchema = Joi.object({
     }),
     email: Joi.string().email().min(2).max(50).required(),
     password: Joi.string().min(6).required(),
-    confirmPassword: Joi.string().valid(Joi.ref('password')).required()
+    confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
+    fotoPerfil: Joi.string().uri().optional().messages({
+    "string.uri": "La URL de la foto de perfil debe ser válida"})
 });

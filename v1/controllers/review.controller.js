@@ -1,11 +1,11 @@
-import { crearReviewService, eliminarReviewService,obtenerTiposReviewService, editarReviewService, obtenerReviewsPorTipoService, todasReviewsSerivce } from "../services/review.services.js";
+import { todasReviewsUsuarioService, articulosTipoService, crearReviewService, eliminarReviewService,obtenerTiposReviewService, editarReviewService, obtenerReviewsPorTipoService, todasReviewsSerivce } from "../services/review.services.js";
 
 
 export const crearReviewController = async (req, res) => {
     try {
-        const { contenido, puntuacion, articulo, tipoArticulo } = req.body;
+        const { contenido, puntuacion, articulo, tipoArticulo , fechaCreacion} = req.body;
         const usuario = req.user.id;
-        const review = await crearReviewService({ contenido, puntuacion, usuario, articulo, tipoArticulo });
+        const review = await crearReviewService({ contenido, puntuacion, usuario, articulo, tipoArticulo, fechaCreacion });
 
         return res.status(201).json({ message: "Reseña creada con éxito", review, });
     } catch (error) {
@@ -59,3 +59,23 @@ export const tiposController = async (req, res) => {
         return res.status(500).json({ error: error.message });
     }
 }
+
+export const articulosTipoContoller = async (req, res) => {
+    try {
+        const articulos = await articulosTipoService();
+        return res.status(200).json(articulos);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
+
+export const todasReviewsUsuarioController = async (req, res) => {
+  try {
+    const userId = req.user.id; 
+    const reviews = await todasReviewsUsuarioService(userId);
+    return res.status(200).json(reviews);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error al obtener las reviews del usuario" });
+  }
+};
